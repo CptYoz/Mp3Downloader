@@ -1,0 +1,45 @@
+# built application files
+*.apk
+*.ap_
+*.aab
+
+#files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+#generated files
+bin/
+gen/
+out/
+
+#gradle
+
+.gradler/
+build/
+
+# Local configuration files(sdk path,etc)
+local.properties
+
+#android studio
+.navigation/
+captures/
+
+#Intellij
+*.iml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/libraries
+.idea/caches
+
+#Android studio 3
+.idea/caches/build_file_checksums.ser
+.idea/modules.xml
+
+
+
+#
