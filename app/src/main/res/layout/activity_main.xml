@@ -5,30 +5,167 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".MainActivity">
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="@color/White"
-        app:itemIconTint="#3F51B5"
+        android:layout_height="60dp"
+        app:itemIconSize="24dp"
+        app:itemIconTint="@color/T"
+        app:itemTextColor="@color/navigation_state"
+        android:background="@color/bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/navigateor"></android.support.design.widget.BottomNavigationView>
+        app:menu="@menu/navigateor">
+
+    </android.support.design.widget.BottomNavigationView>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#757575"
+
+        android:elevation="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/navigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#757575"
+        android:elevation="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/playerBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <FrameLayout
         android:id="@+id/contains"
         android:layout_width="match_parent"
-        android:layout_height="664dp"
-        app:layout_constraintBottom_toTopOf="@+id/navigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:paddingBottom="124dp"
         app:layout_constraintVertical_bias="0.0">
 
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/playerBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/bar"
+        android:elevation="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="308dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/barSongname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/RealWhite"
+                android:ellipsize="marquee"
+                android:gravity="center_horizontal"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:text="Track"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/songStartTime"
+                    android:layout_width="25dp"
+                    android:layout_height="12dp"
+                    android:textColor="@color/RealWhite"
+
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:maxLength="5"
+
+                    android:text="00:00"
+                    android:textSize="10dp" />
+
+                <SeekBar
+                    android:id="@+id/barSeek"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:maxHeight="3dp"
+                    android:progressTint="@color/RealWhite"
+                    android:minHeight="3dp"
+                    android:thumbTint="#FF9100" />
+
+                <TextView
+                    android:id="@+id/songEndTime"
+                    android:layout_width="25dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="left|center_vertical"
+                    android:textColor="@color/RealWhite"
+
+
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:maxLength="5"
+                    android:text="00:00"
+                    android:textSize="10dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/shuffleBut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@mipmap/shuffle_4"
+                android:padding="4dp"/>
+
+            <ImageButton
+                android:id="@+id/loopBut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@mipmap/loop_4"
+                android:padding="4dp"/>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/playBut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingRight="4dp"
+            app:srcCompat="@mipmap/play_deneme_1"
+            android:layout_gravity="center_horizontal|center_vertical"/>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

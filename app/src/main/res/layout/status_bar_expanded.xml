@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relative"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:background="@color/background"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:srcCompat="@mipmap/round_launcer" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:ellipsize="marquee"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:singleLine="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollHorizontally="true"
+        android:textColor="@color/RealWhite"
+        android:text="TextView"
+        android:maxLength="26"/>
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/deneyelim"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/ic_navigate_before_black_24dp"/>
+
+    <ImageButton
+        android:id="@+id/deneyelim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ic_pause_black_24dp"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/deneyelim"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/next_orange"/>
+</RelativeLayout>
