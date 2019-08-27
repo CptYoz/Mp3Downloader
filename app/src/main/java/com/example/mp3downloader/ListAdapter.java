@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private ArrayList<String> name;
@@ -24,6 +26,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private Activity activity;
     private ImageButton addBut;
     private backTo backTo;
+    private SparseBooleanArray itemStateArray= new SparseBooleanArray();
+
 
     public interface backTo{
         public void sendBList(ArrayList<String> a, ArrayList<String>b);
@@ -53,17 +57,22 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         a = a.substring(0,a.length()-4);
         viewHolder.textView.setText(a);
 
+        if (!itemStateArray.get(i,true)) viewHolder.checkBox.setChecked(true);
+        else viewHolder.checkBox.setChecked(false);
 
         viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
+                    itemStateArray.put(i,true);
                     addedName.add(name.get(i));
                     addedPath.add(path.get(i));
                     Log.e("Added",name.get(i));
                     Log.e("Added",path.get(i));
                 }
                 else{
+                    itemStateArray.put(i,false);
+
                     addedName.remove(name.get(i));
                     addedPath.remove(path.get(i));
                 }
@@ -98,6 +107,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     playerInterface.songStu(getAdapterPosition());
                 }
             });
+
         }
     }
 

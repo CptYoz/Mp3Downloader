@@ -9,23 +9,23 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class Constants extends BroadcastReceiver {
-
-
+    private mainPlayPause playPause;
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context,"recieved", Toast.LENGTH_SHORT).show();
 
         String action= intent.getStringExtra("DOo");
         Log.i("Nottt", action);
 
 
-        if (action.equals("back")) {
-            Log.i("Nottt", "back");
 
+       if (action.equals("back")) {
+            MainActivity.getInstace().prevSong();
         } else if (action.equals("play")) {
-            Log.i("Nottt", "play");
-        }
-        else Log.i("Nottt", "Next");
+            MainActivity.getInstace().pause();
+        }else if (action.equals("pause")){
+           MainActivity.getInstace().play();
+       }
+        else MainActivity.getInstace().nextSong();
 
     }
 }

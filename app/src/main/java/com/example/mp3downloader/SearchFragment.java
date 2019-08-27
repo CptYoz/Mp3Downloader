@@ -8,6 +8,7 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -288,13 +289,8 @@ public class SearchFragment extends Fragment implements MyAdapter.passData {
             if (downloadID == id) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_HIGH);
-
-                    // Configure the notification channel.
                     notificationChannel.setDescription("Channel description");
-                    notificationChannel.enableLights(true);
-                    notificationChannel.setLightColor(Color.RED);
-                    notificationChannel.setVibrationPattern(new long[]{0, 500, 0, 0});
-                    notificationChannel.enableVibration(true);
+                    notificationChannel.setShowBadge(false);
                     notificationManager.createNotificationChannel(notificationChannel);
                 }
 
@@ -304,8 +300,9 @@ public class SearchFragment extends Fragment implements MyAdapter.passData {
                 notificationBuilder.setAutoCancel(true)
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setWhen(System.currentTimeMillis())
-                        .setSmallIcon(R.drawable.ic_add_black_24dp)
-                        .setContentTitle("Download Complete")
+                        .setColor(Resources.getSystem().getColor(R.color.T))
+                        .setSmallIcon(R.mipmap.note_orange)
+                        .setContentTitle("Download Complete!")
                         .setContentText(songName);
                 notificationManager.notify(/*notification id*/1, notificationBuilder.build());
             }

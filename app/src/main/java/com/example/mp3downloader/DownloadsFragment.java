@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class DownloadsFragment extends Fragment implements PlayerInterface,DownloadAdapter.refresh {
@@ -56,12 +58,27 @@ public class DownloadsFragment extends Fragment implements PlayerInterface,Downl
 
             File rootFolder = new File(rootPath);
             File[] files = rootFolder.listFiles(); //here you will get NPE if directory doesn't contains  any file,handle it like this.
+            Arrays.sort( files, new Comparator()
+            {
+                public int compare(Object o1, Object o2) {
+
+                    if (((File)o1).lastModified() > ((File)o2).lastModified()) {
+                        return -1;
+                    } else if (((File)o1).lastModified() < ((File)o2).lastModified()) {
+                        return +1;
+                    } else {
+                        return 0;
+                    }
+                }
+
+            });
             for (File file : files) {
-                Log.e("TAG","for");
-                 if (file.getName().endsWith(".mp3")) {
+                if (file.getName().endsWith(".mp3")) {
+                     Log.e("file name", file.getName());
+
                         songNames.add(file.getName());
                         songPaths.add(file.getAbsolutePath());
-                        Log.e("TAG","in file");
+
 
                 }
             }

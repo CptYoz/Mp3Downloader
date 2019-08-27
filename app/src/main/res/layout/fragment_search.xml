@@ -8,21 +8,31 @@
     android:visibility="visible"
     >
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar13"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/bar"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="8dp" />
+
     <EditText
         android:id="@+id/editText"
         android:layout_width="285dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="8dp"
+        android:backgroundTint="@color/RealWhite"
         android:ems="10"
         android:hint="Search"
-        android:textColorHint="@color/RealWhite"
-        android:textColor="@color/White"
-        android:backgroundTint="@color/RealWhite"
-        android:maxLines="1"
         android:imeOptions="actionSend"
         android:inputType="textPersonName"
+        android:maxLines="1"
+        android:textColor="@color/White"
+        android:gravity="bottom"
 
+        android:textColorHint="@color/RealWhite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,7 +59,7 @@
         android:id="@+id/recyc"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="54dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,5 +88,7 @@
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </android.support.constraint.ConstraintLayout>

@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
 
     <application
@@ -30,7 +31,17 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <receiver android:name=".Constants"
+            android:enabled="true">
+        </receiver>
+        <receiver android:name=".IncomingCall"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".NotDismissReciever"
             android:enabled="true"/>
+        <service android:name=".OnClearFromRecentService" android:stopWithTask="false" />
     </application>
 
 </manifest>

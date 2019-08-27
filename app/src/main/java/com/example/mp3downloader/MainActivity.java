@@ -1,6 +1,7 @@
 package com.example.mp3downloader;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -81,9 +82,13 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
     private Random r ;
     private int randPos;
     private final String CHANNEL_ID = "channelchannelwhatthefischannell?";
-    private Intent play,next,back;
     private boolean looping = false;
     private Notification nBuilder;
+    private static MainActivity ins;
+    private int notOnGoing = 0;
+    private String playingSong;
+    private Activity activity;
+    private Context context;
 
 
 
@@ -194,7 +199,23 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
                 player.prepare();
                 String a = shuffledNames.get(randPos);
                 a = a.substring(0,a.length()-4);
-                NotificationService notificationService = new NotificationService(this,a,this);
+                playingSong = a;
+                if(notOnGoing == 0){
+                    try{
+                        NotificationService notificationService = new NotificationService(this,a,this,0);
+                        notOnGoing =1;
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }else {
+                    try{
+                        NotificationService notificationService = new NotificationService(this,a,this,1);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
+
                 songName.setText(a);
                 shuffledNames.remove(randPos);
                 shuffledPaths.remove(randPos);
@@ -211,8 +232,23 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
 
                 String a = names.get(position);
                 a = a.substring(0,a.length()-4);
+                playingSong = a;
                 songName.setText(a);
-                NotificationService notificationService = new NotificationService(this,a,this);
+                if(notOnGoing == 0){
+                    try{
+                        NotificationService notificationService = new NotificationService(this,a,this,0);
+                        notOnGoing =1;
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }else {
+                    try{
+                        NotificationService notificationService = new NotificationService(this,a,this,1);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
 
             }
 
@@ -228,10 +264,11 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         Log.e("Song Duration: ",String.valueOf(player.getDuration()));
 
     }else {
-            seekBar.setProgress(0);
-            songStartTime.setText("00:00");
-            songName.setText("Song");
-            songEndTime.setText("00:00");
+                seekBar.setProgress(0);
+                songStartTime.setText("00:00");
+                songName.setText("Song");
+                songEndTime.setText("00:00");
+
         }
     }
 
@@ -266,10 +303,16 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         return;
     }
 
-
+    public static MainActivity  getInstace(){
+        return ins;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
+        ins = this;
+        activity = this;
+        context = this;
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},REQ_STORAGE);
@@ -282,7 +325,6 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         registerReceiver(sFragment.onDownloadComplete,new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
         r = new Random();
-
         songStartTime = findViewById(R.id.songStartTime);
         songEndTime = findViewById(R.id.songEndTime);
         shuffleBut = findViewById(R.id.shuffleBut);
@@ -326,6 +368,7 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
                     playBut.setImageResource(R.mipmap.play_deneme_1);
                     isPaused = true;
                     clicked = 1;
+                    NotificationService notificationService = new NotificationService(context,playingSong,activity,23);
                 }
                 else {
                     player.start();
@@ -333,6 +376,8 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
                     playBut.setImageResource(R.mipmap.pause_orange);
                     isPaused=false;
                     clicked=0;
+                    NotificationService notificationService = new NotificationService(context,playingSong,activity,1);
+
                 }
             }
         });
@@ -480,10 +525,61 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         return false;
     }
 
+    public void nextSong(){
+
+        if(shuffle){
+            if(shuffledNames.isEmpty()){
+                shuffledPaths = new ArrayList<>(paths);
+                shuffledNames = new ArrayList<>(names);
+            }
+            randPos = r.nextInt(shuffledNames.size());
+            startPlaying();
+        }else {
+            position++;
+            if(position>names.size()-1)position=0;
+            startPlaying();
+        }
+    }
+
+    public void prevSong(){
+        if(shuffle){
+            if(shuffledNames.isEmpty()){
+                shuffledPaths = new ArrayList<>(paths);
+                shuffledNames = new ArrayList<>(names);
+            }
+            randPos = r.nextInt(shuffledNames.size());
+            startPlaying();
+        }else {
+            position--;
+            if (position == -1)position=0;
+            startPlaying();
+        }
+    }
+
+    public void pause(){
+        player.pause();
+        playBut.setImageResource(R.mipmap.play_deneme_1);
+        isPaused = true;
+        clicked = 1;
+        NotificationService notificationService = new NotificationService(this,playingSong,this,23);
+    }
+
+    public void play(){
+        player.start();
+        updateBar();
+        playBut.setImageResource(R.mipmap.pause_orange);
+        isPaused=false;
+        clicked=0;
+        NotificationService notificationService = new NotificationService(this,playingSong,this,1);
+    }
+
+
     @Override
     public void listFrefresh() {
         lFragment.detachAtach();
     }
+
+
 
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
@@ -540,6 +636,10 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
             }
             return false;
         }
+    }
+
+    public void killMe(){
+        finish();
     }
 
 }
