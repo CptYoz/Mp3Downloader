@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#212121</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="White">#00FFFFFF</color>
-    <color name="blue">#3F51B5</color>
+    <color name="White">#00FFFF</color>
+    <color name="RealWhite">#FFFFFF</color>
+    <color name="blue">#212121</color>
+    <color name="black">#100719</color>
+    <color name="background">#616161</color>
+    <color name="bar">#424242</color>
+    <color name="koyuT">#FF6D00</color>
+    <color name="T">#FF9100</color>
+
 </resources>

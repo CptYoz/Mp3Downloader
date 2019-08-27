@@ -4,37 +4,91 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White">
+    android:background="@color/background"
+    android:visibility="visible"
+    >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar13"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/bar"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="8dp" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="285dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/RealWhite"
         android:ems="10"
         android:hint="Search"
+        android:imeOptions="actionSend"
         android:inputType="textPersonName"
+        android:maxLines="1"
+        android:textColor="@color/White"
+        android:gravity="bottom"
+
+        android:textColorHint="@color/RealWhite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/searchBut"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="12dp"
         android:background="@mipmap/ic_search"
         app:layout_constraintBaseline_toBaselineOf="@+id/editText"
         app:layout_constraintStart_toEndOf="@+id/editText" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="209dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="137dp"
-        android:text="TextView"
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="149dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyc"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="54dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <WebView
+        android:id="@+id/playerW"
+        android:layout_width="350dp"
+        android:layout_height="318dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="168dp"
+
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/close"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="344dp"
+        android:layout_marginTop="148dp"
+        android:background="@drawable/shape"
+        android:src="@mipmap/ic_add_circle"
+        android:rotation="45"
+        android:text="X"
+        android:textSize="20dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </android.support.constraint.ConstraintLayout>
