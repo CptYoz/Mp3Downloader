@@ -119,55 +119,6 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.MyView
                 }
             });
 
-            itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-                @Override
-                public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenu.ContextMenuInfo menuInfo) {
-                    menu.add("Rename").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            final AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity,R.style.AlertDialogTheme);
-                            View view = activity.getLayoutInflater().inflate(R.layout.rename, null, false);
-                            final EditText editText = view.findViewById(R.id.rename);
-                            alertDialog.setNegativeButton("ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    String newName =editText.getText().toString();
-                                    if (newName.matches(""))Toast.makeText(activity.getBaseContext(),"Give a proper name",Toast.LENGTH_LONG).show();
-                                    else {
-                                    String filePath = path.get(getAdapterPosition());
-                                    filePath = filePath.substring(0, path.get(getAdapterPosition()).length() - name.get(getAdapterPosition()).length());
-                                    File from = new File(path.get(getAdapterPosition()));
-                                    Log.e("File Name", from.getName());
-                                    Log.e("File path", from.getAbsolutePath());
-                                    Log.e("File path", from.getPath());
-
-                                    File to = new File(filePath, newName + ".mp3");
-                                    if(to.exists()){
-                                        Toast.makeText(activity.getBaseContext(),"Name in use",Toast.LENGTH_LONG).show();
-
-                                    }else {
-                                    Log.e("File to Name", to.getName());
-                                    Log.e("File path", to.getAbsolutePath());
-
-                                    boolean add = from.renameTo(to);
-                                    Log.e("add", String.valueOf(add));
-
-                                    Log.e("File after Name", from.getName());
-                                    Log.e("Path after Name", from.getAbsolutePath());
-
-                                    changeOthers(name.get(getAdapterPosition()), newName);
-                                    Log.e("Bu değişti", name.get(getAdapterPosition()));
-                                    fresh.refreshMe();
-                                }}}
-                            });
-                            alertDialog.setView(view);
-                            AlertDialog dialog = alertDialog.create();
-                            dialog.show();
-                            return false;
-                        }
-                    });
-                }
-            });
 
         }
 

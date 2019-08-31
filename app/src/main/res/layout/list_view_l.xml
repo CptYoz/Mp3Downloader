@@ -31,10 +31,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@id/songCount"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/note_orange" />
+            app:srcCompat="@drawable/deneme_playlist002"
+            />
 
         <TextView
             android:id="@+id/listText"

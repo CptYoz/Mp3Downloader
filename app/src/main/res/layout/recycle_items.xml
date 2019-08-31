@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearL"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-<LinearLayout
+
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/deneme"
     android:orientation="horizontal">
 
 
@@ -21,85 +22,88 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_music_note_black_24dp" />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+        app:srcCompat="@drawable/note3"
+        android:paddingStart="8dp"
+        android:layout_centerVertical="true"/>
+
+
     <TextView
         android:id="@+id/downName"
+        android:layout_toRightOf="@id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Naber"
-        android:layout_gravity="center_horizontal"
-        android:maxLength="40"
+        android:layout_marginLeft="12dp"
+        android:layout_centerVertical="true"
+        android:lines="2"
+        android:maxWidth="280dp"
         android:textColor="@color/RealWhite"
-        android:textSize="18dp"
-        android:singleLine="true"
+        android:textSize="12sp"
         android:ellipsize="end"
         android:focusable="true"
+        android:gravity="center_vertical"
         />
+
+
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_gravity="center_horizontal"
-    >
-
-    <ImageButton
-        android:id="@+id/downloadButton"
+    android:layout_alignParentEnd="true"
+    android:layout_centerVertical="true"
+    android:orientation="vertical">
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_file_download_black_24dp"
-        />
-
-    <ImageButton
-        android:id="@+id/playButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/play_tusu"
- />
-
-</LinearLayout>
+        android:orientation="horizontal"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        >
 
 
-        <RelativeLayout
-            android:layout_width="72dp"
+        <ImageButton
+            android:id="@+id/downloadButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mp3"
-                android:textSize="12dp"
-                android:textColor="@color/RealWhite"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="4dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Video"
-                android:textSize="12dp"
-                android:textColor="@color/RealWhite"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="4dp"
-                />
-        </RelativeLayout>
+            android:background="@drawable/download002" />
+
+        <ImageButton
+            android:id="@+id/playButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/play002" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    Mp3"
+            android:textColor="@color/RealWhite"
+            android:textSize="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/RealWhite"
+
+            android:textSize="8dp"
+            android:text="        Video"/>
+
+    </LinearLayout>
 
 
 </LinearLayout>
+</RelativeLayout>
 
-</LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="2dp"
         android:background="#757575"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_toStartOf="@id/deneme" />
 
 
 </LinearLayout>

@@ -186,7 +186,6 @@ public class ListsFragment extends Fragment implements AddList,ListsRecycAdapt.k
                         }
                             }
                         });
-
                 builder.setView(view1);
                 dialog = builder.create();
                 dialog.show();

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -30,6 +31,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 
@@ -91,8 +93,14 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
     private Context context;
 
 
-
-
+    @Override
+    public void onBackPressed() {
+        
+        Intent i = new Intent();
+        i.setAction((Intent.ACTION_MAIN));
+        i.addCategory(Intent.CATEGORY_HOME);
+        this.startActivity(i);
+    }
 
     @Override
     public void closeIt() {
@@ -317,6 +325,10 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},REQ_STORAGE);
 
+        IntentFilter filter = new IntentFilter(Intent.ACTION_MEDIA_BUTTON);
+        HeadsetButtonReceiver rr = new HeadsetButtonReceiver();
+        registerReceiver(rr, filter);
+
         final GestureDetector gdt = new GestureDetector(getBaseContext(),new GestureListener());
         container = findViewById(R.id.contains);
         sFragment = new SearchFragment();
@@ -359,6 +371,8 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
             }
         });
         playBut = (ImageButton) findViewById(R.id.playBut);
+
+
 
         playBut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -573,6 +587,15 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         NotificationService notificationService = new NotificationService(this,playingSong,this,1);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_HEADSETHOOK){
+            if(isPaused)play();
+            else pause();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     public void listFrefresh() {
@@ -639,7 +662,27 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
     }
 
     public void killMe(){
-        finish();
+        System.exit(0   );
     }
+
+    public void headsetBut(){
+        if(clicked == 0){
+            player.pause();
+            playBut.setImageResource(R.mipmap.play_deneme_1);
+            isPaused = true;
+            clicked = 1;
+            NotificationService notificationService = new NotificationService(context,playingSong,activity,23);
+        }
+        else {
+            player.start();
+            updateBar();
+            playBut.setImageResource(R.mipmap.pause_orange);
+            isPaused=false;
+            clicked=0;
+            NotificationService notificationService = new NotificationService(context,playingSong,activity,1);
+
+        }
+    }
+
 
 }

@@ -33,6 +33,12 @@
         <receiver android:name=".Constants"
             android:enabled="true">
         </receiver>
+        <receiver android:name=".HeadsetButtonReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON"/>
+            </intent-filter>
+        </receiver>
         <receiver android:name=".IncomingCall"
             android:enabled="true">
             <intent-filter>

@@ -300,7 +300,6 @@ public class SearchFragment extends Fragment implements MyAdapter.passData {
                 notificationBuilder.setAutoCancel(true)
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setWhen(System.currentTimeMillis())
-                        .setColor(Resources.getSystem().getColor(R.color.T))
                         .setSmallIcon(R.mipmap.note_orange)
                         .setContentTitle("Download Complete!")
                         .setContentText(songName);
