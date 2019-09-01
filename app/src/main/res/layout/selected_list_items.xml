@@ -26,13 +26,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:layout_marginStart="12dp"
         android:ellipsize="end"
-        android:maxLength="27"
-        android:singleLine="true"
+        android:maxLength="26"
+        android:lines="2"
+        android:gravity="center"
+        android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
         android:textColor="@color/RealWhite"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:layout_toRightOf="@id/imageView2"
-        android:layout_marginLeft="24dp"
+        android:layout_marginLeft="18sp"
         android:layout_centerVertical="true" />
 
     <CheckBox

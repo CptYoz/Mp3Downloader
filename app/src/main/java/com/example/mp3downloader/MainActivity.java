@@ -28,6 +28,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.GestureDetector;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
     private final int REQ_STORAGE = 1;
     public  FrameLayout container;
     private WebView a;
+    private TelephonyManager telephonyManager;
     private ArrayList<String> names = new ArrayList<>();
     private ArrayList<String> paths = new ArrayList<>();
     private int position = 0;
@@ -329,6 +332,7 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         HeadsetButtonReceiver rr = new HeadsetButtonReceiver();
         registerReceiver(rr, filter);
 
+
         final GestureDetector gdt = new GestureDetector(getBaseContext(),new GestureListener());
         container = findViewById(R.id.contains);
         sFragment = new SearchFragment();
@@ -496,7 +500,31 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         navigationView.setSelectedItemId(R.id.list);
         navigationView.setOnNavigationItemSelectedListener(this);
 
+       telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
+        PhoneStateListener phListener = new PhoneStateListener(){
+            @Override
+            public void onCallStateChanged(int state, String phoneNumber) {
+                Log.e("STATE",String.valueOf(state));
+            switch (state){
+                case TelephonyManager.CALL_STATE_RINGING:
+                    Log.e("STATE","RINGING");
+                    pause();
+                    break;
+                case TelephonyManager.CALL_STATE_IDLE:
+                    Log.e("STATE","IDLE");
+                    play();
+                    break;
+                case TelephonyManager.CALL_STATE_OFFHOOK:
+                    Log.e("STATE","OFFHOOK");
+                    pause();
+                    break;
+            }
+                super.onCallStateChanged(state, phoneNumber);
+                            }
+        };
+
+        telephonyManager.listen(phListener,PhoneStateListener.LISTEN_CALL_STATE);
     }
 
     @Override
@@ -575,6 +603,8 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         playBut.setImageResource(R.mipmap.play_deneme_1);
         isPaused = true;
         clicked = 1;
+        Log.e("PHONE RECEIVER", "Telephone is now pause");
+
         NotificationService notificationService = new NotificationService(this,playingSong,this,23);
     }
 
@@ -584,6 +614,8 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         playBut.setImageResource(R.mipmap.pause_orange);
         isPaused=false;
         clicked=0;
+        Log.e("PHONE RECEIVER", "Telephone is now busy");
+
         NotificationService notificationService = new NotificationService(this,playingSong,this,1);
     }
 

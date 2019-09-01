@@ -40,13 +40,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="12dp"
         android:ellipsize="end"
         android:maxLength="40"
-        android:singleLine="true"
+        android:lines="2"
+        android:gravity="center|left"
         android:text="aaaaaaaaaaaaaaaaaaaaaaaaaa"
         android:textColor="@color/RealWhite"
-        android:textSize="18dp"
+        android:textSize="18sp"
+        android:focusable="true"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent" />
 

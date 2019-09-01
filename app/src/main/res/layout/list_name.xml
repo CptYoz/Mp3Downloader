@@ -1,38 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:orientation="vertical"
-android:layout_gravity="center_horizontal"
-    android:background="@color/background">
-
-<TextView
-    android:id="@+id/asdsa"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:text="Give a name to playlist"
-    android:textColor="#FFFFFF"
-    android:textSize="20dp"
-    android:layout_gravity="center_horizontal"/>
-
-<EditText
-    android:id="@+id/listName"
-    android:layout_width="302dp"
-    android:layout_height="wrap_content"
-    android:backgroundTint="@color/RealWhite"
-    android:ems="10"
-    android:textColor="@color/RealWhite"
-    android:inputType="text"
-    android:textColorHint="@color/RealWhite"
-    android:hint="Name"
-    android:maxLength="20"
-    android:maxLines="1"
     android:layout_gravity="center_horizontal"
-    android:gravity="center_horizontal"/>
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/asdsa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:text="Give a name to playlist"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/listName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/RealWhite"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:hint="Name"
+        android:inputType="text"
+        android:maxLength="20"
+        android:maxLines="1"
+        android:textColor="@color/RealWhite"
+        android:textColorHint="@color/RealWhite" />
 
 
 </LinearLayout>

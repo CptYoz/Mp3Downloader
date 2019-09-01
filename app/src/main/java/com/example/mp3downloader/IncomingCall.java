@@ -16,8 +16,8 @@ public class IncomingCall extends BroadcastReceiver {
         {
             if(intent != null && intent.getAction().equals("android.intent.action.NEW_OUTGOING_CALL"))
             {
-//Toast.makeText(context, "Outgoign call", 1000).show();
-                String number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
+System.out.println("asddddddddddddd");
+                MainActivity.getInstace().pause();
             }
             else
             {
@@ -29,18 +29,17 @@ public class IncomingCall extends BroadcastReceiver {
                 {
 //read the incoming call number
 
-                    MainActivity.getInstace().pause();
                 }
                 else if(newPhoneState != null && newPhoneState.equals(TelephonyManager.EXTRA_STATE_IDLE))
                 {
 //Once the call ends, phone will become idle
                     Log.i("PHONE RECEIVER", "Telephone is now idle");
-                    MainActivity.getInstace().play();
+                   // MainActivity.getInstace().play();
                 }
                 else if(newPhoneState != null && newPhoneState.equals(TelephonyManager.EXTRA_STATE_OFFHOOK))
                 {
 //Once you receive call, phone is busy
-                    Log.i("PHONE RECEIVER", "Telephone is now busy");
+                    Log.e("PHONE RECEIVER", "Telephone is now busy");
                     MainActivity.getInstace().pause();
                 }
 

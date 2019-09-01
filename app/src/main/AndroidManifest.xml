@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/round_launcer"
@@ -37,12 +36,6 @@
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON"/>
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".IncomingCall"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
         <receiver android:name=".NotDismissReciever"
