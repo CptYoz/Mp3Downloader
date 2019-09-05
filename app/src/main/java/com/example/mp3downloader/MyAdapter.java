@@ -1,22 +1,21 @@
 package com.example.mp3downloader;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,9 +24,9 @@ import java.util.Map;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     public interface passData {
-        public void str(String s);
-        public void pos(int i);
-        public void stopPlay();
+        void str(String s);
+        void pos(int i);
+        void stopPlay();
     }
 
     private ArrayList<String> names = new ArrayList<>();

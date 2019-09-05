@@ -7,6 +7,10 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 public class HeadsetButtonReceiver extends BroadcastReceiver {
+    public HeadsetButtonReceiver ()
+    {
+        super ();
+    }
     @Override
     public void onReceive(Context context, Intent intent) {
         String intentAction = intent.getAction();
@@ -14,7 +18,7 @@ public class HeadsetButtonReceiver extends BroadcastReceiver {
         if (!Intent.ACTION_MEDIA_BUTTON.equals(intentAction)) {
             return;
         }
-        KeyEvent event = (KeyEvent)intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
+        KeyEvent event = intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
         Log.e("Key Event",String.valueOf(event));
         if (event == null) {
             return;
@@ -23,7 +27,6 @@ public class HeadsetButtonReceiver extends BroadcastReceiver {
         if (action == KeyEvent.ACTION_UP) {
             MainActivity.getInstace().headsetBut();
         }
-        abortBroadcast();
     }
 
 }

@@ -8,27 +8,12 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.PrecomputedText;
-import android.util.JsonReader;
-import android.util.JsonToken;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -37,31 +22,28 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.ConsoleMessage;
 import android.webkit.DownloadListener;
-import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
-import java.util.logging.Handler;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
-import static android.support.constraint.Constraints.TAG;
+
 
 
 public class SearchFragment extends Fragment implements MyAdapter.passData {
@@ -70,13 +52,13 @@ public class SearchFragment extends Fragment implements MyAdapter.passData {
     private boolean isloading = false;
     public static String searched;
     private static ArrayList<String> songNames = new ArrayList<>();
-    private Button searchBut;
+    private ImageButton searchBut;
     private ImageButton close;
     private String songName;
     private String songImage;
     private static String size ;
     private EditText searchInput;
-    private  RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private  MyAdapter adapt;
     private  Context mContext;
     private int position;
@@ -107,7 +89,7 @@ public class SearchFragment extends Fragment implements MyAdapter.passData {
     }
 
     public interface aa{
-        public void stopIt();
+        void stopIt();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)  {
@@ -121,10 +103,7 @@ public class SearchFragment extends Fragment implements MyAdapter.passData {
         ConnectivityManager connectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         boolean connected;
-        if (networkInfo != null) {
-            connected = true;
-        } else {
-    connected = false;        }
+        connected = networkInfo != null;
 
 
         if (connected== false){
@@ -177,44 +156,33 @@ public class SearchFragment extends Fragment implements MyAdapter.passData {
             }
         });
 
-        searchBut = view.findViewById(R.id.searchBut);
         close = view.findViewById(R.id.close);
 
-        playerW = (WebView) view.findViewById(R.id.playerW);
+        playerW = view.findViewById(R.id.playerW);
         playerW.getSettings().setDomStorageEnabled(true);
         playerW.getSettings().setJavaScriptEnabled(true);
 
         searchInput = view.findViewById(R.id.editText);
         webView.loadUrl("https://www.mp3juices.cc/");
+
+
         searchInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handle = false;
-                if(actionId == EditorInfo.IME_ACTION_SEND){
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     if (!searchInput.getText().toString().equals("")) {
                         songNames.clear();
                         searched = "\"" + searchInput.getText().toString() + "\"";
                         songNames.clear();
                         webView.loadUrl("https://www.mp3juices.cc/");
                         hideKeyboardFrom(getContext(), v);
-                    } else Toast.makeText(getContext(), "Nothing to search!", Toast.LENGTH_LONG).show();
-                    handle = true;
-                }
-                return handle;
+                        return true;
+                    } else {
+                        Toast.makeText(getContext(), "Nothing to search!", Toast.LENGTH_LONG).show(); } }
+                return false;
             }
         });
-        searchBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!searchInput.getText().toString().equals("")) {
-                    songNames.clear();
-                    searched = "\"" + searchInput.getText().toString() + "\"";
-                    songNames.clear();
-                    webView.loadUrl("https://www.mp3juices.cc/");
-                    hideKeyboardFrom(getContext(), v);
-                } else Toast.makeText(getContext(), "Nothing to search!", Toast.LENGTH_LONG).show();
-            }
-        });
+
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,19 +217,23 @@ public class SearchFragment extends Fragment implements MyAdapter.passData {
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
-                view.evaluateJavascript("document.querySelectorAll('#results .name').length;;", new ValueCallback<String>() {
+                view.evaluateJavascript("document.querySelectorAll('#results .name').length;", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
                         Log.e("size",value);
                         size = value;
-                        for(int i=0;i<Integer.valueOf(value);i++){
-                            assignNames(view,i);
+                        if(Integer.valueOf(size)>0){
+                            for(int i=0;i<Integer.valueOf(value);i++){
+                                assignNames(view,i);
+                            }
+                        }else {
+                            getLength(view);
                         }
 
                     }
                 });
             }
-        },1000);
+        },100);
 
     }
 

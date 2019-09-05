@@ -1,33 +1,22 @@
 package com.example.mp3downloader;
 
-import android.annotation.SuppressLint;
+
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.browse.MediaBrowser;
-import android.media.session.MediaSession;
 import android.os.Build;
-import android.os.IBinder;
-import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
-import android.view.View;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
-import java.net.ResponseCache;
+import androidx.core.app.NotificationCompat;
+
 
 public class NotificationService {
     private Context parent;
@@ -98,7 +87,7 @@ public class NotificationService {
                     .addAction(R.drawable.ic_skip_previous_black_24dp, "back", prevPendingIntent) // #0
                     .addAction(R.drawable.ic_pause_black_24dp, "play", pausePendingIntent)  // #1
                     .addAction(R.drawable.ic_skip_next_black_24dp, "next", nextPendingIntent)     // #2
-                    .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle()
+                    .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
                             .setShowActionsInCompactView(0, 1, 2)
                             .setMediaSession(mediaSessionCompat.getSessionToken()))
                     .setPriority(NotificationCompat.PRIORITY_LOW)
@@ -126,7 +115,7 @@ public class NotificationService {
                     .addAction(R.drawable.ic_skip_previous_black_24dp, "back", prevPendingIntent)
                     .addAction(R.drawable.ic_pause_black_24dp, "play", pausePendingIntent)
                     .addAction(R.drawable.ic_skip_next_black_24dp, "next", nextPendingIntent)
-                    .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle()
+                    .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
                             .setShowActionsInCompactView(0, 1, 2)
                             .setMediaSession(mediaSessionCompat.getSessionToken()))
                     .setPriority(NotificationCompat.PRIORITY_LOW)
@@ -149,7 +138,7 @@ public class NotificationService {
                     .addAction(R.drawable.ic_skip_previous_black_24dp, "back", prevPendingIntent)
                     .addAction(R.drawable.play_tusu, "play", playPendingIntent)
                     .addAction(R.drawable.ic_skip_next_black_24dp, "next", nextPendingIntent)
-                    .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle()
+                    .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
                             .setShowActionsInCompactView(0, 1, 2)
                             .setMediaSession(mediaSessionCompat.getSessionToken()))
                     .setPriority(NotificationCompat.PRIORITY_LOW)

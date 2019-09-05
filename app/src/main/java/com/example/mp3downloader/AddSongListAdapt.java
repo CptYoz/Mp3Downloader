@@ -1,17 +1,17 @@
 package com.example.mp3downloader;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class AddSongListAdapt extends RecyclerView.Adapter<AddSongListAdapt.View
     private PlayerInterface playerInterface;
 
     public interface songsAddedList{
-        public void AddedToList(ArrayList<String> addedN,ArrayList<String> addedP,String key);
+        void AddedToList(ArrayList<String> addedN, ArrayList<String> addedP, String key);
     }
 
 

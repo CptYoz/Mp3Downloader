@@ -1,26 +1,25 @@
 package com.example.mp3downloader;
 
-import android.app.Activity;
-import android.media.MediaPlayer;
+
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
+
 
 public class DownloadsFragment extends Fragment implements PlayerInterface,DownloadAdapter.refresh {
 
@@ -31,7 +30,7 @@ public class DownloadsFragment extends Fragment implements PlayerInterface,Downl
     private ArrayList<String> songPaths = new ArrayList<>();
 
     public interface refreshListF{
-        public void listFrefresh();
+        void listFrefresh();
     }
 
     @Override

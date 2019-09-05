@@ -1,12 +1,11 @@
 package com.example.mp3downloader;
 
-import android.app.Activity;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+
 
 public class Constants extends BroadcastReceiver {
     private mainPlayPause playPause;

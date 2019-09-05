@@ -5,26 +5,21 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -114,8 +109,8 @@ public class ListsRecycAdapt extends RecyclerView.Adapter<ListsRecycAdapt.ViewHo
 
 
     public interface keysToPlay {
-        public void keys(String s);
-        public void detachAtach(String a);
+        void keys(String s);
+        void detachAtach(String a);
     }
 
     public ListsRecycAdapt(ArrayList<String> keys, Activity activity, keysToPlay keysToPlay,SharedPreferences preferences,SharedPreferences.Editor editor) {

@@ -3,21 +3,18 @@ package com.example.mp3downloader;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.ListFragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,7 +34,7 @@ public class ListDialogFragment extends Fragment implements PlayerInterface, Lis
     private sendList sendList;
 
     public interface sendList{
-        public void sendAList(ArrayList<String> a, ArrayList<String>b);
+        void sendAList(ArrayList<String> a, ArrayList<String> b);
     }
 
     public void getList(ArrayList<String> a, ArrayList<String>b){
@@ -100,7 +97,7 @@ public class ListDialogFragment extends Fragment implements PlayerInterface, Lis
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_dialog_fragment,container,false);
-        recyclerView = (RecyclerView)view.findViewById(R.id.playListRecyc);
+        recyclerView = view.findViewById(R.id.playListRecyc);
         addBut = view.findViewById(R.id.addBut);
         final Fragment fragment = this;
 

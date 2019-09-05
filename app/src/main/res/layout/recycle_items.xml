@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/note3"
+        app:srcCompat="@mipmap/note_orange"
         android:paddingStart="8dp"
         android:layout_centerVertical="true"/>
 
@@ -38,7 +38,7 @@
         android:lines="2"
         android:maxWidth="280dp"
         android:textColor="@color/RealWhite"
-        android:textSize="12sp"
+        android:textSize="16sp"
         android:ellipsize="end"
         android:focusable="true"
         android:gravity="center_vertical"

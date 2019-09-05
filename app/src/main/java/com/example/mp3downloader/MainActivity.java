@@ -4,60 +4,46 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.Notification;
-import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
+import android.os.Handler;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 
-public class MainActivity extends AppCompatActivity implements DownloadsFragment.refreshListF,SearchFragment.aa,BottomNavigationView.OnNavigationItemSelectedListener,DownMainInter,ListDialogFragment.sendList,ListsFragment.TextClicked,PlayList.closePlayList,PlayList.addListFrag {
+
+public class MainActivity extends AppCompatActivity implements DownloadsFragment.refreshListF,SearchFragment.aa, BottomNavigationView.OnNavigationItemSelectedListener,DownMainInter,ListDialogFragment.sendList,ListsFragment.TextClicked,PlayList.closePlayList,PlayList.addListFrag {
     public  BottomNavigationView navigationView;
     public  SearchFragment sFragment;
     public  DownloadsFragment dFragment;
@@ -67,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
     private final int REQ_STORAGE = 1;
     public  FrameLayout container;
     private WebView a;
+    private TelephonyManager telephonyManager;
     private ArrayList<String> names = new ArrayList<>();
     private ArrayList<String> paths = new ArrayList<>();
     private int position = 0;
@@ -91,6 +78,10 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
     private String playingSong;
     private Activity activity;
     private Context context;
+    private HeadsetButtonReceiver hr;
+    private ComponentName mReceiverComponent;
+    private AudioManager mAudioManager;
+    private int acılıs = 0;
 
 
     @Override
@@ -140,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         if(clicked == 0){
             player.pause();
             playBut.setImageResource(R.mipmap.play_deneme_1);
-
             isPaused = true;
             clicked = 1;
         }
@@ -149,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
     @Override
     public void notPlaying(String s) {
         int pos = names.indexOf(s);
-        if (shuffledNames.contains(s))shuffledNames.remove(shuffledNames.indexOf(s));
+        shuffledNames.remove(s);
         Log.e("Evet","Dogru");
         Log.e("Evet",songName.getText().toString()+".mp3");
         String s1= songName.getText().toString()+".mp3";
@@ -265,8 +255,8 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
             e.printStackTrace();
         }
 
-        int seconds = (int) (player.getDuration() / 1000) % 60 ;
-        int minutes = (int) ((player.getDuration() / (1000*60)) % 60);
+        int seconds = (player.getDuration() / 1000) % 60 ;
+        int minutes = (player.getDuration() / (1000*60)) % 60;
         if(seconds<10)songEndTime.setText(minutes+":0"+seconds);
         else songEndTime.setText(minutes+":"+seconds);
         Log.e("Song Duration: ",String.valueOf(player.getDuration()));
@@ -282,8 +272,8 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
 
     private void updateBar() {
         seekBar.setProgress(player.getCurrentPosition());
-        int seconds = (int) (player.getCurrentPosition() / 1000) % 60 ;
-        int minutes = (int) ((player.getCurrentPosition() / (1000*60)) % 60);
+        int seconds = (player.getCurrentPosition() / 1000) % 60 ;
+        int minutes = (player.getCurrentPosition() / (1000*60)) % 60;
         if(seconds<10)songStartTime.setText(minutes+":0"+seconds);
         else songStartTime.setText(minutes+":"+seconds);
 
@@ -314,6 +304,36 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
     public static MainActivity  getInstace(){
         return ins;
     }
+
+    private PhoneStateListener phoneStateListener = new PhoneStateListener() {
+        public void onCallStateChanged(int state, String incomingNumber) {
+
+            if (state == TelephonyManager.CALL_STATE_RINGING) {
+                Log.i("LOG_TAG","State : RING RING");
+                pause();
+            }
+            if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
+                Log.i("LOG_TAG","State : OFFHOOK");
+                pause();
+            }
+            if (state == TelephonyManager.CALL_STATE_IDLE) {
+                Log.i("LOG_TAG","State : IDLE");
+                if(acılıs == 0)acılıs=1;
+                else play();
+            }
+        }
+    };
+
+
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(sFragment.onDownloadComplete);
+        mAudioManager.unregisterMediaButtonEventReceiver(mReceiverComponent);
+        super.onDestroy();
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -325,15 +345,22 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},REQ_STORAGE);
 
-        IntentFilter filter = new IntentFilter(Intent.ACTION_MEDIA_BUTTON);
-        HeadsetButtonReceiver rr = new HeadsetButtonReceiver();
-        registerReceiver(rr, filter);
+        telephonyManager = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+        telephonyManager.listen(phoneStateListener,PhoneStateListener.LISTEN_CALL_STATE);
+
+        mAudioManager =  (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        mReceiverComponent = new ComponentName(this,HeadsetButtonReceiver.class);
+        mAudioManager.registerMediaButtonEventReceiver(mReceiverComponent);
+
+
 
         final GestureDetector gdt = new GestureDetector(getBaseContext(),new GestureListener());
+
         container = findViewById(R.id.contains);
         sFragment = new SearchFragment();
         dFragment = new DownloadsFragment();
         lFragment = new ListsFragment();
+
         registerReceiver(sFragment.onDownloadComplete,new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
         r = new Random();
@@ -343,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         loopBut = findViewById(R.id.loopBut);
 
         player = new MediaPlayer();
-        seekBar = (SeekBar)findViewById(R.id.barSeek);
+        seekBar = findViewById(R.id.barSeek);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -362,7 +389,7 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
             }
         });
 
-        songName = (TextView)findViewById(R.id.barSongname);
+        songName = findViewById(R.id.barSongname);
         songName.setSelected(true);
         songName.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -370,7 +397,7 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
                 return gdt.onTouchEvent(event);
             }
         });
-        playBut = (ImageButton) findViewById(R.id.playBut);
+        playBut = findViewById(R.id.playBut);
 
 
 
@@ -492,10 +519,9 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         transaction.add(R.id.contains,lFragment,"List Fragment");
         transaction.commit();
 
-        navigationView = (BottomNavigationView)findViewById(R.id.navigationView);
+        navigationView = findViewById(R.id.navigationView);
         navigationView.setSelectedItemId(R.id.list);
         navigationView.setOnNavigationItemSelectedListener(this);
-
 
     }
 
@@ -575,6 +601,8 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         playBut.setImageResource(R.mipmap.play_deneme_1);
         isPaused = true;
         clicked = 1;
+        Log.e("PHONE RECEIVER", "Telephone is now pause");
+
         NotificationService notificationService = new NotificationService(this,playingSong,this,23);
     }
 
@@ -584,6 +612,8 @@ public class MainActivity extends AppCompatActivity implements DownloadsFragment
         playBut.setImageResource(R.mipmap.pause_orange);
         isPaused=false;
         clicked=0;
+        Log.e("PHONE RECEIVER", "Telephone is now busy");
+
         NotificationService notificationService = new NotificationService(this,playingSong,this,1);
     }
 
